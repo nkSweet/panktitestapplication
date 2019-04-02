@@ -1,4 +1,4 @@
-package com.example.panktitestapplication;
+package com.example.panktitestapplication.view;
 
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import io.reactivex.Observable;
 
 
@@ -22,14 +19,12 @@ public class Repository {
 
     private ApiCallInterface apiCallInterface;
     private final UserDataDao userDao;
-    private final Executor executor;
     private LiveData<List<RoomUserData>> mAllUsers;
 
 
-    public Repository(ApiCallInterface apiCallInterface, UserDataDao userDao, Executor executor) {
+    public Repository(ApiCallInterface apiCallInterface, UserDataDao userDao) {
         this.apiCallInterface = apiCallInterface;
         this.userDao = userDao;
-        this.executor = executor;
     }
 
 
@@ -38,23 +33,34 @@ public class Repository {
     }
 
     public  LiveData<List<RoomUserData>> getUser() {
-        mAllUsers = userDao.getAllNotes();
+        mAllUsers = userDao.findAll();
         return mAllUsers;
 
         // refreshUser(userLogin); // try to refresh data if possible from Github Api
-//        return userDao.getAllNotes(); // return a LiveData directly from the database.
+//        return userDao.getAllUser(); // return a LiveData directly from the database.
     }
 
-    //method to add note
-    public void addNote(RoomUserData note) {
-        new AddNote().execute(note);
+    public void addUsers(List<RoomUserData> user) {
+        new AddUser().execute(user);
+    }
+ public void delete(RoomUserData user) {
+        new DeleteUser().execute(user);
     }
 
-    //Async task to add note
-    public class AddNote extends AsyncTask<RoomUserData, Void, Void> {
+    public class AddUser extends AsyncTask<List<RoomUserData>, Void, Void> {
         @Override
-        protected Void doInBackground(RoomUserData... notes) {
-            userDao.insertNote(notes[0]);
+        protected Void doInBackground(List<RoomUserData>... users) {
+            for(int i=0;i<users.length;i++) {
+                userDao.insert(users[0].get(i));
+            }
+            return null;
+        }
+    }
+
+    public class DeleteUser extends AsyncTask<RoomUserData, Void, Void> {
+        @Override
+        protected Void doInBackground(RoomUserData... users) {
+            userDao.delete(users[0]);
             return null;
         }
     }

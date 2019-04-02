@@ -1,4 +1,4 @@
-package com.example.panktitestapplication;
+package com.example.panktitestapplication.view;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
@@ -7,10 +7,7 @@ import android.arch.lifecycle.ViewModel;
 import com.example.panktitestapplication.Utils.ApiResponse;
 import com.example.panktitestapplication.database.RoomUserData;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.inject.Inject;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -21,20 +18,24 @@ public class UserViewModel extends ViewModel {
     private Repository repository;
     private final CompositeDisposable disposables = new CompositeDisposable();
     private final MutableLiveData<ApiResponse> responseLiveData = new MutableLiveData<>();
-    private LiveData<List<RoomUserData>> mAllNotes;
+    private LiveData<List<RoomUserData>> allUsers;
 
 
     public UserViewModel(Repository repository) {
         this.repository = repository;
-        mAllNotes = repository.getUser();
+        allUsers = repository.getUser();
     }
 
     public LiveData<List<RoomUserData>> getAllUsers() {
-        return mAllNotes;
+        return allUsers;
     }
 
-    public void addUser(RoomUserData note) {
-        repository.addNote(note);
+    public void addUser(List<RoomUserData> users) {
+        repository.addUsers(users);
+    }
+
+    public void deleteUser(RoomUserData note) {
+        repository.delete(note);
     }
     public MutableLiveData<ApiResponse> UserDataResponse() {
         return responseLiveData;

@@ -1,24 +1,29 @@
-package com.example.panktitestapplication;
+package com.example.panktitestapplication.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 
+import com.example.panktitestapplication.R;
 import com.example.panktitestapplication.database.RoomUserData;
+import com.example.panktitestapplication.view.UserViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserListRvAdapter  extends RecyclerView.Adapter<UserListRvAdapter.MyViewHolder> {
 
-    private ArrayList<RoomUserData> dataSet;
+    private List<RoomUserData> dataSet;
+    private UserViewModel userViewModel;
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvName,tvEmail,tvAddress,tvPhone,tvWebsite,tvCompnay;
+        Button btnDelete;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -28,11 +33,13 @@ public class UserListRvAdapter  extends RecyclerView.Adapter<UserListRvAdapter.M
             this.tvPhone = (TextView) itemView.findViewById(R.id.tv_phone);
             this.tvWebsite = (TextView) itemView.findViewById(R.id.tv_website);
             this.tvCompnay= (TextView) itemView.findViewById(R.id.tv_compnay);
+            this.btnDelete= (Button) itemView.findViewById(R.id.btn_delete);
         }
     }
 
-    public UserListRvAdapter(ArrayList<RoomUserData> data) {
+    public UserListRvAdapter(List<RoomUserData> data, UserViewModel userViewModel) {
         this.dataSet = data;
+        this.userViewModel = userViewModel;
     }
 
     @Override
@@ -59,6 +66,13 @@ public class UserListRvAdapter  extends RecyclerView.Adapter<UserListRvAdapter.M
         + "," + dataSet.get(listPosition).getAddress().getStreet()
                 +"," + dataSet.get(listPosition).getAddress().getCity()
         );
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userViewModel.deleteUser(dataSet.get(listPosition));
+            }
+        });
     }
 
     @Override

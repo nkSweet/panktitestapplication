@@ -2,12 +2,11 @@ package com.example.panktitestapplication.Utils;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.hardware.usb.UsbRequest;
 import android.support.annotation.NonNull;
 
 
-import com.example.panktitestapplication.Repository;
-import com.example.panktitestapplication.UserViewModel;
+import com.example.panktitestapplication.view.Repository;
+import com.example.panktitestapplication.view.UserViewModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;

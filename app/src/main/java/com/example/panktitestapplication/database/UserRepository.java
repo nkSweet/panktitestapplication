@@ -4,14 +4,12 @@ import android.arch.lifecycle.LiveData;
 
 import java.util.List;
 
-public interface ProductRepository {
+public interface UserRepository {
 
-
-    LiveData<RoomUserData> findById(int id);
 
     LiveData<List<RoomUserData>> findAll();
 
-    long insert(RoomUserData product);
+    long insert(RoomUserData userData);
 
-    int delete(RoomUserData product);
+    int delete(RoomUserData userData);
 }

@@ -1,23 +1,21 @@
 package com.example.panktitestapplication.di;
 
 
-import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.example.panktitestapplication.Repository;
+import com.example.panktitestapplication.view.Repository;
 import com.example.panktitestapplication.Utils.ApiCallInterface;
 import com.example.panktitestapplication.Utils.ViewModelFactory;
 import com.example.panktitestapplication.database.MyDatabase;
-import com.example.panktitestapplication.database.ProductDataSource;
+import com.example.panktitestapplication.database.UserDataSource;
 import com.example.panktitestapplication.database.UserDataDao;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -50,8 +48,8 @@ public class UtilsModule {
 //    }
 
 
-    @Singleton
     @Provides
+    @Singleton
     MyDatabase providesRoomDatabase() {
         return demoDatabase;
     }
@@ -63,10 +61,10 @@ public class UtilsModule {
     UserDataDao provideUserDao(MyDatabase database) { return database.userDao(); }
 
 
-    @Singleton
     @Provides
-    ProductDataSource productRepository(UserDataDao productDao) {
-        return new ProductDataSource(productDao);
+    @Singleton
+    UserDataSource productRepository(UserDataDao productDao) {
+        return new UserDataSource(productDao);
     }
 
 
@@ -117,8 +115,8 @@ public class UtilsModule {
 
     @Provides
     @Singleton
-    Repository getRepository(ApiCallInterface apiCallInterface,UserDataDao userDao, Executor executor) {
-        return new Repository(apiCallInterface,userDao,executor);
+    Repository getRepository(ApiCallInterface apiCallInterface,UserDataDao userDao) {
+        return new Repository(apiCallInterface,userDao);
     }
 
     @Provides

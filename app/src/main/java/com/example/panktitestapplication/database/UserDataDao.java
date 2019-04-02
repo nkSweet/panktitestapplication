@@ -16,21 +16,6 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 @Dao
 public interface UserDataDao   {
 
-    // Dao method to get all notes
-    @Query("SELECT * FROM RoomUserData")
-    LiveData<List<RoomUserData>> getAllNotes();
-
-    // Dao method to insert note
-    @Insert(onConflict = REPLACE)
-    void insertNote(RoomUserData note);
-
-    // Dao method to delete note
-    @Delete
-    void deleteNote(RoomUserData note);
-
-
-    @Query("SELECT * FROM RoomUserData WHERE id=:id")
-    LiveData<RoomUserData> findById(int id);
 
     @Query("SELECT * FROM RoomUserData")
     LiveData<List<RoomUserData>> findAll();

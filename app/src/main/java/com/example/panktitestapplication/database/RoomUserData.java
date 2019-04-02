@@ -125,7 +125,7 @@ public class RoomUserData {
         this.company = company;
     }
 
-    public class Company {
+    public static class Company {
 
         public String getName() {
             return name;
@@ -156,7 +156,7 @@ public class RoomUserData {
         private String bs;
     }
 
-    public class Address {
+    public static class Address {
 
         public String getStreet() {
             return street;
@@ -203,11 +203,12 @@ public class RoomUserData {
         private String suite;
         private String city;
         private String zipcode;
+
         @Embedded(prefix = "geo")
         private Geo geo;
     }
 
-    public class Geo {
+    public static class Geo {
 
         public String getLat() {
             return lat;

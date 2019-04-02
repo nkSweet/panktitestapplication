@@ -1,6 +1,5 @@
-package com.example.panktitestapplication;
+package com.example.panktitestapplication.view;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,24 +8,25 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.panktitestapplication.MyApplication;
+import com.example.panktitestapplication.R;
 import com.example.panktitestapplication.Utils.ApiResponse;
 import com.example.panktitestapplication.Utils.ViewModelFactory;
-import com.example.panktitestapplication.database.ProductRepository;
 import com.example.panktitestapplication.database.RoomUserData;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.panktitestapplication.view.adapter.UserListRvAdapter;
 
-      RecyclerView rvUserDetails;
-     UserViewModel userViewModel;
+public class MainActivity extends AppCompatActivity {
     @Inject
     ViewModelFactory viewModelFactory;
 
-    @Inject
-    public ProductRepository productRepository;
+      RecyclerView rvUserDetails;
+     UserViewModel userViewModel;
+
 
 
     @Override
@@ -75,10 +75,9 @@ public class MainActivity extends AppCompatActivity {
         if (response != null) {
             if (response.size() > 0) {
 //                Log.e("responsisJsonNulle=",""+response.size());
-                RoomUserData roomUserData = response.get(0);
+                rvUserDetails.setAdapter(new UserListRvAdapter(response,userViewModel));
+                userViewModel.addUser(response);
 
-                rvUserDetails.setAdapter(new UserListRvAdapter(response));
-//                userViewModel.addUser(response.get(0));
             } else {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
