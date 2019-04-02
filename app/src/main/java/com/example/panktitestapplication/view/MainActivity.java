@@ -76,8 +76,10 @@ public class MainActivity extends AppCompatActivity {
             if (response.size() > 0) {
 //                Log.e("responsisJsonNulle=",""+response.size());
 
+                rvUserDetails.setAdapter(new UserListRvAdapter(response,userViewModel));
                 userViewModel.addUser(response);
-                rvUserDetails.setAdapter(new UserListRvAdapter(userViewModel.getAllUsers(),userViewModel));
+
+//                rvUserDetails.setAdapter(new UserListRvAdapter(userViewModel.getAllUsers(),userViewModel));
             } else {
                 Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
