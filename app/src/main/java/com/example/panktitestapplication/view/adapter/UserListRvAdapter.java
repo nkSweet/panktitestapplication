@@ -2,6 +2,7 @@ package com.example.panktitestapplication.view.adapter;
 
 import android.arch.lifecycle.LiveData;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +71,7 @@ public class UserListRvAdapter  extends RecyclerView.Adapter<UserListRvAdapter.M
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.e("delete ", "click");
                 userViewModel.deleteUser(dataSet.getValue().get(listPosition));
                 notifyDataSetChanged();
             }
